@@ -3,6 +3,7 @@ package com.altuhin.ecommerce.product.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_category")
@@ -16,5 +17,9 @@ public class ProductCategory {
 
     @Column()
     private String categoryName;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private Set<Product> products;
+
 
 }
