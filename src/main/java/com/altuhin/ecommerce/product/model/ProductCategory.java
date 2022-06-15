@@ -5,9 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "product_category")
-@Data
+
 public class ProductCategory {
 
     @Id
