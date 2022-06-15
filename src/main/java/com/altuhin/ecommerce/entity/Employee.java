@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -84,8 +83,8 @@ public class Employee {
     @Column(name = "reports_to")
     private Integer reportsTo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Territory> territories;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<EmployeeTerritory> employeeTerritories;
 
 
 }

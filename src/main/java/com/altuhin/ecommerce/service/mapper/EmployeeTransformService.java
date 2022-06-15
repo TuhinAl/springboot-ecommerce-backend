@@ -1,4 +1,4 @@
-package com.altuhin.ecommerce.service;
+package com.altuhin.ecommerce.service.mapper;
 
 import com.altuhin.ecommerce.dto.EmployeeDto;
 import com.altuhin.ecommerce.entity.Employee;
