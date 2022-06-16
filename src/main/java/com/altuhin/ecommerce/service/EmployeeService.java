@@ -33,7 +33,7 @@ public class EmployeeService {
 
     public void saveEmployeeInfo(EmployeeDto employeeDto) {
 
-        final Employee employee = EmployeeTransformService.mapToEmployeeDto(employeeDto, new Employee());
+         Employee employee = EmployeeTransformService.mapToEmployeeDto(employeeDto, new Employee());
         List<Territory> territories = TerritoryTransformService.mapToTerritory(employeeDto.getTerritories());
 
         employeeRepository.save(employee);

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @Accessors(chain = true)
 public class CustomerDto implements Serializable {
-    private String companyName;
+    private String customerName;
     private String contactName;
     private String contactTitle;
     private String address;

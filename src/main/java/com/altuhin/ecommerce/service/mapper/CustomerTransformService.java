@@ -17,14 +17,14 @@ public class CustomerTransformService {
 
     public static CustomerDto mapToCustomerDto(Customer customer) {
         CustomerDto customerDto = new CustomerDto();
-        return customerDto.setCompanyName(customer.getCompanyName()).setContactName(customer.getContactName())
+        return customerDto.setCustomerName(customer.getCompanyName()).setContactName(customer.getContactName())
                 .setContactTitle(customer.getContactTitle()).setAddress(customer.getAddress())
                 .setCity(customer.getCity())
                 .setCountry(customer.getCountry()).setPhone(customer.getPhone());
     }
 
     public static CustomerDto mapToCustomerDto(Customer customer, CustomerDto customerDto) {
-        return customerDto.setCompanyName(customer.getCompanyName()).setContactName(customer.getContactName())
+        return customerDto.setCustomerName(customer.getCompanyName()).setContactName(customer.getContactName())
                 .setContactTitle(customer.getContactTitle()).setAddress(customer.getAddress())
                 .setCity(customer.getCity())
                 .setCountry(customer.getCountry()).setPhone(customer.getPhone());
@@ -32,13 +32,13 @@ public class CustomerTransformService {
 
     public static Customer mapToCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
-        return customer.setCompanyName(customerDto.getCompanyName()).setContactName(customerDto.getContactName())
+        return customer.setCompanyName(customerDto.getCustomerName()).setContactName(customerDto.getContactName())
                 .setContactTitle(customerDto.getContactTitle()).setAddress(customerDto.getAddress()).setCity(customerDto.getCity())
                 .setCountry(customerDto.getCountry()).setPhone(customerDto.getPhone());
     }
 
     public static Customer mapToCustomer(Customer customer, CustomerDto customerDto) {
-        return customer.setCompanyName(customerDto.getCompanyName()).setContactName(customerDto.getContactName())
+        return customer.setCompanyName(customerDto.getCustomerName()).setContactName(customerDto.getContactName())
                 .setContactTitle(customerDto.getContactTitle()).setAddress(customerDto.getAddress()).setCity(customerDto.getCity())
                 .setCountry(customerDto.getCountry()).setPhone(customerDto.getPhone());
     }

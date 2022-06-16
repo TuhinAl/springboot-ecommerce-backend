@@ -20,8 +20,8 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
 
-    public CustomerDto saveCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public CustomerDto saveCustomer(CustomerDto customerDto) {
+        Customer customer = customerRepository.save(CustomerTransformService.mapToCustomer(customerDto));
         return CustomerTransformService.mapToCustomerDto(customer);
     }
 

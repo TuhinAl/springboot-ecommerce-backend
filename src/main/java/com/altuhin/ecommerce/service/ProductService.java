@@ -2,7 +2,9 @@ package com.altuhin.ecommerce.service;
 
 import com.altuhin.ecommerce.ApplicationUtility;
 import com.altuhin.ecommerce.dto.ProductDto;
+import com.altuhin.ecommerce.entity.Category;
 import com.altuhin.ecommerce.entity.Product;
+import com.altuhin.ecommerce.reporsitory.CategoryRepository;
 import com.altuhin.ecommerce.reporsitory.ProductRepository;
 import com.altuhin.ecommerce.service.mapper.ProductTransformService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +20,12 @@ import javax.transaction.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
 
     public ProductDto saveProduct(ProductDto productDto) {
-        Product savedProduct = productRepository.save(ProductTransformService.mapToProduct(productDto));
+        Category category = categoryRepository.findById(productDto.getCategoryId()).get();
+        Product savedProduct = productRepository.save(ProductTransformService.mapToProduct(productDto, category));
         return ProductTransformService.mapToProductDto(savedProduct);
     }
 

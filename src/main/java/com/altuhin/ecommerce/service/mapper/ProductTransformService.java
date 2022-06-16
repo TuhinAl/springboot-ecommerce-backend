@@ -1,6 +1,7 @@
 package com.altuhin.ecommerce.service.mapper;
 
 import com.altuhin.ecommerce.dto.ProductDto;
+import com.altuhin.ecommerce.entity.Category;
 import com.altuhin.ecommerce.entity.Product;
 
 public class ProductTransformService {
@@ -35,6 +36,15 @@ public class ProductTransformService {
 
     public static Product mapToProduct(ProductDto productDto) {
         Product product = new Product();
+        return product.setProductName(productDto.getProductName()).setUnitInStock(productDto.getUnitInStock())
+                .setUnitOnOrder(productDto.getUnitOnOrder()).setUnitPrice(productDto.getUnitPrice())
+                .setReorderLevel(productDto.getReorderLevel()).setDiscontinued(productDto.getDiscontinued())
+                .setProductName(productDto.getProductName()).setQuantityPerUnit(productDto.getQuantityPerUnit());
+    }
+
+    public static Product mapToProduct(ProductDto productDto, Category category) {
+        Product product = new Product();
+        product.setCategory(category);
         return product.setProductName(productDto.getProductName()).setUnitInStock(productDto.getUnitInStock())
                 .setUnitOnOrder(productDto.getUnitOnOrder()).setUnitPrice(productDto.getUnitPrice())
                 .setReorderLevel(productDto.getReorderLevel()).setDiscontinued(productDto.getDiscontinued())

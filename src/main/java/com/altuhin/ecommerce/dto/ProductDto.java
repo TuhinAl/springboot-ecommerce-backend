@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Setter
 @Accessors(chain = true)
 public class ProductDto implements Serializable {
+
+    private Integer categoryId;
     private Integer unitInStock;
     private Integer unitOnOrder;
     private Double unitPrice;

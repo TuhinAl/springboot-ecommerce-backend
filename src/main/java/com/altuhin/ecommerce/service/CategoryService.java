@@ -19,7 +19,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryDto savaCategory(CategoryDto categoryDto) {
+    public CategoryDto saveCategory(CategoryDto categoryDto) {
         Category saveCategory = categoryRepository.save(CategoryTransformService.mapToCategory(categoryDto));
         return CategoryTransformService.mapToCategoryDto(saveCategory);
     }

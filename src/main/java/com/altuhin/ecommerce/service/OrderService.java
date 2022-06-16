@@ -2,8 +2,14 @@ package com.altuhin.ecommerce.service;
 
 import com.altuhin.ecommerce.ApplicationUtility;
 import com.altuhin.ecommerce.dto.OrderDto;
+import com.altuhin.ecommerce.entity.Customer;
+import com.altuhin.ecommerce.entity.Employee;
 import com.altuhin.ecommerce.entity.Order;
+import com.altuhin.ecommerce.entity.Shipper;
+import com.altuhin.ecommerce.reporsitory.CustomerRepository;
+import com.altuhin.ecommerce.reporsitory.EmployeeRepository;
 import com.altuhin.ecommerce.reporsitory.OrderRepository;
+import com.altuhin.ecommerce.reporsitory.ShipperRepository;
 import com.altuhin.ecommerce.service.mapper.OrderTransformService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +24,21 @@ import javax.transaction.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ShipperRepository shipperRepository;
 
-    public OrderDto saveOrder(Order order) {
-        if (!order.equals(null)) {
-            orderRepository.save(order);
-        }
+    public OrderDto saveOrder(OrderDto orderDto) {
+        Customer customer = customerRepository.findById(orderDto.getCustomerId()).get();
+        Employee employee = employeeRepository.findById(orderDto.getEmployeeId()).get();
+        Shipper shipper = shipperRepository.findById(orderDto.getFreight()).get();
+
+        Order mapToOrder = OrderTransformService.mapToOrder(orderDto);
+        mapToOrder.setCustomer(customer);
+        mapToOrder.setEmployee(employee);
+        mapToOrder.setShipper(shipper);
+        Order order = orderRepository.save(mapToOrder);
+
         return OrderTransformService.mapToOrderDto(order);
     }
 

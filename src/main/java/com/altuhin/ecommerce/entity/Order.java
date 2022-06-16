@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -68,18 +69,18 @@ public class Order {
     private String shipCountry;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ship_via", nullable = false)
+    @JoinColumn(name = "ship_via")
     private Shipper shipper;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderDetails> orderDetailsList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 }

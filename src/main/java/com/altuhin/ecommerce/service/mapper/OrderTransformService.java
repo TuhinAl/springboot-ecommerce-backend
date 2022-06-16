@@ -21,8 +21,7 @@ public class OrderTransformService {
     public static Order mapToOrder(OrderDto orderDto) {
         Order order = new Order();
 
-        return order.setOrderDate(orderDto.getOrderDate()).setShippedDate(orderDto.getShippedDate())
-                .setFreight(orderDto.getFreight()).setShipName(orderDto.getShipName()).setShipAddress(orderDto.getShipAddress())
+        return order.setFreight(orderDto.getFreight()).setShipName(orderDto.getShipName()).setShipAddress(orderDto.getShipAddress())
                 .setShipCity(orderDto.getShipCity()).setShipRegion(orderDto.getShipRegion()).setShipCountry(orderDto.getShipCountry());
     }
 

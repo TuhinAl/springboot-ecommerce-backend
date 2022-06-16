@@ -15,6 +15,8 @@ public class OrderDto implements Serializable {
     private LocalDate orderDate;
     private LocalDate ShippedDate;
     private Integer freight;
+    private Integer customerId;
+    private Integer employeeId;
     private String shipName;
     private String shipAddress;
     private String shipCity;
