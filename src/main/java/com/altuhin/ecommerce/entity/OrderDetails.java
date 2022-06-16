@@ -30,6 +30,15 @@ public class OrderDetails {
     @Column(name = "category_id")
     private Integer id;
 
+    @Column(name = "unit_price")
+    private Integer unitPrice;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "discount")
+    private Integer discount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;

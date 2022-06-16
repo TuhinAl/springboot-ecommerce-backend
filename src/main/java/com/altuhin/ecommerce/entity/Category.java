@@ -23,7 +23,7 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categories {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,6 @@ public class Categories {
     @Column(name = "photo")
     private Byte[] photo;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> productList;
 }
