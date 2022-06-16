@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 
 public class OrderDetailsDto implements Serializable {
+    private Integer orderId;
+    private Integer productId;
     private Integer unitPrice;
     private Integer quantity;
     private Integer discount;
