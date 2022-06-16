@@ -34,10 +34,10 @@ public class EmployeeTerritory implements Serializable {
     private Integer territoryId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "territory_id")
+    @JoinColumn(name = "territory_id", nullable = false)
     private Territory territory;
 }

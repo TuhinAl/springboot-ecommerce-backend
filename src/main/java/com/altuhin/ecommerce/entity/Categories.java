@@ -8,10 +8,13 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -35,4 +38,7 @@ public class Categories {
 
     @Column(name = "photo")
     private Byte[] photo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    private List<Product> productList;
 }

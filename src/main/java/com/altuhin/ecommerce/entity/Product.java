@@ -8,10 +8,15 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -26,11 +31,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Integer id;
-    @Column(name = "supplier_id")//todo mapping
-    private Integer supplierId;
-
-    @Column(name = "category_id") //todo mapping
-    private Integer categoryId;
 
     @Column(name = "units_in_stock")
     private Integer unitInStock;
@@ -52,4 +52,16 @@ public class Product {
 
     @Column(name = "quantity_per_unit")
     private String quantityPerUnit;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Categories categories;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<OrderDetails> orderDetailsList;
+
 }

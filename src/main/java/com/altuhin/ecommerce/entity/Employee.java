@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
@@ -85,6 +87,13 @@ public class Employee {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<EmployeeTerritory> employeeTerritories;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Employee parentEmployee;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<Order> orderList;
 
 
 }

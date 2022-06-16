@@ -8,11 +8,16 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -38,9 +43,6 @@ public class Order {
     @Column(name = "shipped_date")
     private LocalDate ShippedDate;
 
-    @Column(name = "ship_via")
-    private Integer ShipVia;
-
     @Column(name = "freight")
     private Integer freight;
 
@@ -61,4 +63,20 @@ public class Order {
 
     @Column(name = "ship_country")
     private String shipCountry;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ship_via", nullable = false)
+    private Shipper shipper;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderDetails> orderDetailsList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 }

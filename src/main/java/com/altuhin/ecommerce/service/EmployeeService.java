@@ -47,14 +47,12 @@ public class EmployeeService {
 
         JPAQuery<EmployeeTerritory> descriptionProjectionJPAQuery = new JPAQuery<>(entityManager);
 
-        EmployeeDescriptionProjection employeeDescriptionProjection = descriptionProjectionJPAQuery
+        return descriptionProjectionJPAQuery
                 .from(qEmployeeTerritory)
                 .leftJoin(qEmployeeTerritory.employee, qEmployee)
                 .leftJoin(qEmployeeTerritory.territory, qTerritory)
                 .where(qEmployeeTerritory.employeeId.eq(employeeId))
                 .select(new QEmployeeDescriptionProjection(qEmployee.firstName,
                         qEmployee.city, qTerritory.territoryDescription)).fetchFirst();
-
-        return employeeDescriptionProjection;
     }
 }
