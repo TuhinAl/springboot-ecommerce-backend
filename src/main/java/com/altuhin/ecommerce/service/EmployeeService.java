@@ -1,5 +1,6 @@
 package com.altuhin.ecommerce.service;
 
+import com.altuhin.ecommerce.ApplicationUtility;
 import com.altuhin.ecommerce.dto.EmployeeDto;
 import com.altuhin.ecommerce.dto.projection.EmployeeDescriptionProjection;
 import com.altuhin.ecommerce.dto.projection.QEmployeeDescriptionProjection;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -54,5 +56,26 @@ public class EmployeeService {
                 .where(qEmployeeTerritory.employeeId.eq(employeeId))
                 .select(new QEmployeeDescriptionProjection(qEmployee.firstName,
                         qEmployee.city, qTerritory.territoryDescription)).fetchFirst();
+    }
+
+    public EmployeeDto updateEmployee(EmployeeDto employeeDto, Integer id) {
+
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee with this id"));
+        employee.setFirstName(employee.getFirstName()).setTitle(employee.getTitle())
+                .setAddress(employeeDto.getAddress()).setHomePhone(employeeDto.getHomePhone());
+
+        employeeRepository.save(employee);
+
+        return EmployeeTransformService.mapToEmployee(employeeDto, employee);
+    }
+
+    public EmployeeDto deleteEmployee(Integer id) {
+
+        Employee employee = employeeRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Employee with this id"));
+        employee.setDelete(ApplicationUtility.EMPLOYEE_DELETED);
+        employeeRepository.save(employee);
+
+        return EmployeeTransformService.mapToEmployee(employee);
     }
 }

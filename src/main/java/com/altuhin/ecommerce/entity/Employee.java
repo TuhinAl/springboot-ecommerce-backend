@@ -85,6 +85,9 @@ public class Employee {
     @Column(name = "reports_to")
     private Integer reportsTo;
 
+    @Column(name = "is_delete")
+    private Integer delete;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<EmployeeTerritory> employeeTerritories;
 
