@@ -39,6 +39,9 @@ public class OrderDetails {
     @Column(name = "discount")
     private Integer discount;
 
+    @Column(name = "is_delete")
+    private Integer delete;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;

@@ -1,0 +1,42 @@
+package com.altuhin.ecommerce.service;
+
+import com.altuhin.ecommerce.ApplicationUtility;
+import com.altuhin.ecommerce.dto.ProductDto;
+import com.altuhin.ecommerce.entity.Product;
+import com.altuhin.ecommerce.reporsitory.ProductRepository;
+import com.altuhin.ecommerce.service.mapper.ProductTransformService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+
+@Service
+@Slf4j
+@Transactional
+@RequiredArgsConstructor
+public class ProductService {
+
+    private final ProductRepository productRepository;
+
+
+    public ProductDto saveProduct(ProductDto productDto) {
+        Product savedProduct = productRepository.save(ProductTransformService.mapToProduct(productDto));
+        return ProductTransformService.mapToProductDto(savedProduct);
+    }
+
+    public ProductDto updateProduct(ProductDto productDto, Integer id) {
+
+        Product product = productRepository.findById(id).get();
+        Product savedProduct = productRepository.save(ProductTransformService.mapToProduct(product, productDto));
+        return ProductTransformService.mapToProductDto(savedProduct);
+    }
+
+    public ProductDto deleteProduct(ProductDto productDto, Integer id) {
+
+        Product product = productRepository.findById(id).get();
+        product.setDelete(ApplicationUtility.PRODUCT_DELETED);
+        Product savedProduct = productRepository.save(product);
+        return ProductTransformService.mapToProductDto(savedProduct);
+    }
+}

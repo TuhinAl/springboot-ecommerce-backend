@@ -30,6 +30,9 @@ public class Customer {
     @Column(name = "customer_id")
     private Integer id;
 
+    @Column(name = "is_delete")
+    private Integer delete;
+
     @Column(name = "company_name")
     private String companyName;
 

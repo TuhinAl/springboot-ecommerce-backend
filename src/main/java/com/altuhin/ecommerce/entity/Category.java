@@ -30,6 +30,9 @@ public class Category {
     @Column(name = "category_id")
     private Integer id;
 
+    @Column(name = "is_delete")
+    private Integer delete;
+
     @Column(name = "category_name")
     private String categoryName;
 

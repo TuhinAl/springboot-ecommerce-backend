@@ -46,6 +46,9 @@ public class Order {
     @Column(name = "freight")
     private Integer freight;
 
+    @Column(name = "is_delete")
+    private Integer delete;
+
     @Column(name = "ship_name")
     private String shipName;
 

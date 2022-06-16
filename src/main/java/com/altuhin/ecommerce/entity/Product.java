@@ -38,6 +38,9 @@ public class Product {
     @Column(name = "units_on_order")
     private Integer unitOnOrder;
 
+    @Column(name = "isDelete")
+    private Integer delete;
+
     @Column(name = "unit_price")
     private Double unitPrice;
 
