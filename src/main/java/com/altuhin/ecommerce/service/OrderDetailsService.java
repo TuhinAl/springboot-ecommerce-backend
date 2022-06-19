@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -26,8 +27,12 @@ public class OrderDetailsService {
     private final OrderRepository orderRepository;
 
     public OrderDetailsDto saveOrderDetails(OrderDetailsDto orderDetailsDto) {
-        Product product = productRepository.findById(orderDetailsDto.getProductId()).get();
-        Order order = orderRepository.findById(orderDetailsDto.getOrderId()).get();
+        Product product = productRepository.findById(orderDetailsDto.getProductId()).orElseThrow(
+                () -> new EntityNotFoundException("Product With This Id is not Found!")
+        );
+        Order order = orderRepository.findById(orderDetailsDto.getOrderId()).orElseThrow(
+                () -> new EntityNotFoundException("Order With This Id is not Found!")
+        );
         OrderDetails orderDetails = OrderDetailsTransformService.mapToOrderDetails(orderDetailsDto);
         orderDetails.setProduct(product);
         orderDetails.setOrder(order);
@@ -36,13 +41,17 @@ public class OrderDetailsService {
     }
 
     public OrderDetailsDto updateOrderDetails(OrderDetailsDto orderDetailsDto, Integer id) {
-        OrderDetails orderDetails = orderDetailsRepository.findById(id).get();
+        OrderDetails orderDetails = orderDetailsRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("OrderDetails With This Id is not Found!")
+        );
         return OrderDetailsTransformService.mapToOrderDetailsDto(orderDetailsRepository
                 .save(OrderDetailsTransformService.mapToOrderDetails(orderDetailsDto)));
     }
 
     public OrderDetailsDto deleteOrderDetails(Integer id) {
-        OrderDetails orderDetails = orderDetailsRepository.findById(id).get();
+        OrderDetails orderDetails = orderDetailsRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("OrderDetails With This Id is not Found!")
+        );
 
         return OrderDetailsTransformService.mapToOrderDetailsDto(orderDetailsRepository
                 .save(orderDetails.setDelete(ApplicationUtility.ORDER_DETAILS_DELETED)));

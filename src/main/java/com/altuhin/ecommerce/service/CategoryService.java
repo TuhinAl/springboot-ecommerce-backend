@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -25,13 +26,17 @@ public class CategoryService {
     }
 
     public CategoryDto updateCategory(CategoryDto categoryDto, Integer id) {
-        Category category = categoryRepository.findById(id).get();
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Category With This Id is not Found!")
+        );
         Category saveCategory = categoryRepository.save(CategoryTransformService.mapToCategory(category, categoryDto));
         return CategoryTransformService.mapToCategoryDto(saveCategory);
     }
 
     public CategoryDto deleteCategory(CategoryDto categoryDto, Integer id) {
-        Category category = categoryRepository.findById(id).get();
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Category With This Id is not Found!")
+        );
         category.setDelete(ApplicationUtility.CATEGORY_DELETED);
         return CategoryTransformService.mapToCategoryDto(categoryRepository.save(category));
     }

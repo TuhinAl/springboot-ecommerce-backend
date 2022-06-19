@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -24,21 +25,27 @@ public class ProductService {
 
 
     public ProductDto saveProduct(ProductDto productDto) {
-        Category category = categoryRepository.findById(productDto.getCategoryId()).get();
+        Category category = categoryRepository.findById(productDto.getCategoryId()).orElseThrow(
+                () -> new EntityNotFoundException("Category With This Id is not Found!")
+        );
         Product savedProduct = productRepository.save(ProductTransformService.mapToProduct(productDto, category));
         return ProductTransformService.mapToProductDto(savedProduct);
     }
 
     public ProductDto updateProduct(ProductDto productDto, Integer id) {
 
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Product With This Id is not Found!")
+        );
         Product savedProduct = productRepository.save(ProductTransformService.mapToProduct(product, productDto));
         return ProductTransformService.mapToProductDto(savedProduct);
     }
 
     public ProductDto deleteProduct(ProductDto productDto, Integer id) {
 
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Product With This Id is not Found!")
+        );
         product.setDelete(ApplicationUtility.PRODUCT_DELETED);
         Product savedProduct = productRepository.save(product);
         return ProductTransformService.mapToProductDto(savedProduct);

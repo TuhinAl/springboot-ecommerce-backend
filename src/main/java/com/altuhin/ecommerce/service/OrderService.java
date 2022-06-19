@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -29,9 +30,17 @@ public class OrderService {
     private final ShipperRepository shipperRepository;
 
     public OrderDto saveOrder(OrderDto orderDto) {
-        Customer customer = customerRepository.findById(orderDto.getCustomerId()).get();
-        Employee employee = employeeRepository.findById(orderDto.getEmployeeId()).get();
-        Shipper shipper = shipperRepository.findById(orderDto.getFreight()).get();
+
+        Customer customer = customerRepository.findById(orderDto.getCustomerId()).orElseThrow(
+                () -> new EntityNotFoundException("Customer With This Id is not Found!")
+        );
+        Employee employee = employeeRepository.findById(orderDto.getEmployeeId()).orElseThrow(
+                () -> new EntityNotFoundException("Employee With This Id is not Found!")
+        );
+
+        Shipper shipper = shipperRepository.findById(orderDto.getFreight()).orElseThrow(
+                () -> new EntityNotFoundException("Shipper With This Id is not Found!")
+        );
 
         Order mapToOrder = OrderTransformService.mapToOrder(orderDto);
         mapToOrder.setCustomer(customer);
@@ -43,7 +52,9 @@ public class OrderService {
     }
 
     public OrderDto updateOrder(OrderDto orderDto, Integer orderId) {
-        Order order = orderRepository.findById(orderId).get();
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Order With This Id is not Found!")
+        );
         if (null != order) {
             orderRepository.save(OrderTransformService.mapToOrder(order, orderDto));
         }
@@ -51,7 +62,9 @@ public class OrderService {
     }
 
     public OrderDto deleteOrder(Integer orderId) {
-        Order order = orderRepository.findById(orderId).get();
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Order With This Id is not Found!")
+        );
         if (order != null) {
             order.setDelete(ApplicationUtility.ORDER_DELETED);
             orderRepository.save(order);

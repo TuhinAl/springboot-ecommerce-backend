@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -26,14 +27,18 @@ public class CustomerService {
     }
 
     public CustomerDto updateCustomer(CustomerDto customerDto, Integer id) {
-        Customer customer = customerRepository.findById(id).get();
+        Customer customer = customerRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Customer With This Id is not Found!")
+        );
         Customer updatedCustomer = CustomerTransformService.mapToCustomer(customer, customerDto);
         customerRepository.save(updatedCustomer);
         return CustomerTransformService.mapToCustomerDto(updatedCustomer);
     }
 
     public CustomerDto deleteCustomer(CustomerDto customerDto, Integer id) {
-        Customer customer = customerRepository.findById(id).get();
+        Customer customer = customerRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Customer With This Id is not Found!")
+        );
         customer.setDelete(ApplicationUtility.CUSTOMER_DELETED);
         customerRepository.save(customer);
         return CustomerTransformService.mapToCustomerDto(customer);
