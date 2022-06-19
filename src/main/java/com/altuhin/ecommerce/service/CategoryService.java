@@ -33,7 +33,7 @@ public class CategoryService {
         return CategoryTransformService.mapToCategoryDto(saveCategory);
     }
 
-    public CategoryDto deleteCategory(CategoryDto categoryDto, Integer id) {
+    public CategoryDto deleteCategory(Integer id) {
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category With This Id is not Found!")
         );

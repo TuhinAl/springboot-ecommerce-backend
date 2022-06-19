@@ -35,7 +35,7 @@ public class CustomerService {
         return CustomerTransformService.mapToCustomerDto(updatedCustomer);
     }
 
-    public CustomerDto deleteCustomer(CustomerDto customerDto, Integer id) {
+    public CustomerDto deleteCustomer(Integer id) {
         Customer customer = customerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Customer With This Id is not Found!")
         );

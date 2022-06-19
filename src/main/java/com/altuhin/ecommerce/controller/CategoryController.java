@@ -3,7 +3,9 @@ package com.altuhin.ecommerce.controller;
 import com.altuhin.ecommerce.dto.CategoryDto;
 import com.altuhin.ecommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,16 @@ public class CategoryController {
     @PostMapping()
     public CategoryDto saveCategory(@RequestBody CategoryDto categoryDto) {
         return categoryService.saveCategory(categoryDto);
+    }
+
+    @PutMapping("/{id}")
+    public CategoryDto updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Integer id) {
+        return categoryService.updateCategory(categoryDto, id);
+    }
+
+    @PostMapping("/{id}")
+    public CategoryDto deleteCategory(@PathVariable Integer id) {
+        return categoryService.deleteCategory(id);
     }
 
 }
