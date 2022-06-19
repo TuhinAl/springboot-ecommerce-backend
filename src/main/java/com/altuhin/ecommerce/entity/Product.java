@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,10 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -60,9 +64,17 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "product_supplier",
+            joinColumns = {
+                    @JoinColumn(name = "product_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "supplier_id")
+            }
+
+    )
+    private Set<Supplier> supplier;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<OrderDetails> orderDetailsList;

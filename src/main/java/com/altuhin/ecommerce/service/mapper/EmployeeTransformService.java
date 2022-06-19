@@ -26,6 +26,18 @@ public class EmployeeTransformService {
                 .setNotes(employeeDto.getNotes()).setPhotoPath(employeeDto.getPhotoPath());
     }
 
+    public static EmployeeDto mapToEmployeeDto(Employee employee) {
+        EmployeeDto employeeDto = new EmployeeDto();
+
+        return employeeDto.setCity(employee.getCity()).setFirstName(employee.getFirstName())
+                .setLastName(employee.getLastName()).setTitleOfCourtesy(employee.getTitleOfCourtesy())
+                .setBirthDate(employee.getBirthDate()).setHireDate(employee.getHireDate())
+                .setAddress(employee.getAddress()).setPostalCode(employee.getPostalCode())
+                .setExtension(employee.getExtension()).setCountry(employee.getCountry())
+                .setHomePhone(employee.getHomePhone()).setPhoto(employee.getPhoto())
+                .setNotes(employee.getNotes()).setPhotoPath(employee.getPhotoPath());
+    }
+
     public static EmployeeDto mapToEmployee(Employee employeeDto) {
         EmployeeDto dto = new EmployeeDto();
 

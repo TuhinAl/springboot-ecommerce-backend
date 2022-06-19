@@ -31,13 +31,13 @@ public class EmployeeService {
     private final TerritoryRepository territoryRepository;
 
 
-    public void saveEmployeeInfo(EmployeeDto employeeDto) {
+    public EmployeeDto saveEmployeeInfo(EmployeeDto employeeDto) {
 
         Employee employee = EmployeeTransformService.mapToEmployeeDto(employeeDto, new Employee());
         List<Territory> territories = TerritoryTransformService.mapToTerritory(employeeDto.getTerritories());
-
-        employeeRepository.save(employee);
+        Employee save = employeeRepository.save(employee);
         territoryRepository.saveAll(territories);
+        return EmployeeTransformService.mapToEmployeeDto(save);
     }
 
 

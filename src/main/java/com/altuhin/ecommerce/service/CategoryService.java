@@ -34,6 +34,8 @@ public class CategoryService {
     }
 
     public CategoryDto deleteCategory(Integer id) {
+
+
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category With This Id is not Found!")
         );
