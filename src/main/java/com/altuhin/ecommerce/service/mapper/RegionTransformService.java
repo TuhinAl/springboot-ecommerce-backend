@@ -21,7 +21,7 @@ public class RegionTransformService {
             territory.setTerritoryDescription(territoryDto.getDescription());
             territoryList.add(territory);
         }
-        region.setRegionDescription(region.getRegionDescription());
+        region.setRegionDescription(regionDto.getRegionDescription());
         region.setTerritoryList(territoryList);
         return region;
 
