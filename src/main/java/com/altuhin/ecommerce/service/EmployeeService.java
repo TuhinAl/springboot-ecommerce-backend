@@ -16,10 +16,15 @@ import com.altuhin.ecommerce.service.mapper.EmployeeTransformService;
 import com.altuhin.ecommerce.service.mapper.TerritoryTransformService;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -41,21 +46,31 @@ public class EmployeeService {
     }
 
 
-    public EmployeeDescriptionProjection getEmployeeTerritoryById(Integer employeeId) {
+    public Page<EmployeeDescriptionProjection> getEmployeeTerritoryById(Integer[] employeeId) {
 
+        List<Integer> idList = Arrays.asList(
+                employeeId
+        );
+
+        Integer page = 0;
+        Integer size = 10;
+
+        Pageable pageable = PageRequest.of(page, size);
         final QEmployee qEmployee = QEmployee.employee;
         final QTerritory qTerritory = QTerritory.territory;
         final QEmployeeTerritory qEmployeeTerritory = QEmployeeTerritory.employeeTerritory;
 
         JPAQuery<EmployeeTerritory> descriptionProjectionJPAQuery = new JPAQuery<>(entityManager);
 
-        return descriptionProjectionJPAQuery
-                .from(qEmployeeTerritory)
-                .leftJoin(qEmployeeTerritory.employee, qEmployee)
-                .leftJoin(qEmployeeTerritory.territory, qTerritory)
-                .where(qEmployeeTerritory.employeeId.eq(employeeId))
-                .select(new QEmployeeDescriptionProjection(qEmployee.firstName,
-                        qEmployee.city, qTerritory.territoryDescription)).fetchFirst();
+        List<EmployeeDescriptionProjection> employeeDescriptionProjectionList = descriptionProjectionJPAQuery.from(qEmployeeTerritory)
+                .leftJoin(qEmployeeTerritory.employee, qEmployee).leftJoin(qEmployeeTerritory.territory, qTerritory)
+                .where(qEmployeeTerritory.employeeId.in(idList)).select(new QEmployeeDescriptionProjection(qEmployee.firstName, qEmployee.city,
+                        qTerritory.territoryDescription))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetch();
+
+        return new PageImpl<>(employeeDescriptionProjectionList, pageable, descriptionProjectionJPAQuery.fetchCount());
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto, Integer id) {

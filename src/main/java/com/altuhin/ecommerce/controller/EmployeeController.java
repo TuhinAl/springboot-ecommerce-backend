@@ -3,12 +3,14 @@ package com.altuhin.ecommerce.controller;
 import com.altuhin.ecommerce.dto.EmployeeDto;
 import com.altuhin.ecommerce.dto.projection.EmployeeDescriptionProjection;
 import com.altuhin.ecommerce.service.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,8 +29,8 @@ public class EmployeeController {
         return "save successfully";
     }
 
-    @GetMapping("/{id}")
-    public EmployeeDescriptionProjection saveEmployee(@PathVariable Integer id) {
+    @GetMapping("/getAll")
+    public Page<EmployeeDescriptionProjection> saveEmployee(@RequestParam("id") Integer[] id) {
         return employeeService.getEmployeeTerritoryById(id);
     }
 

@@ -37,6 +37,6 @@ public class Territory {
     private List<EmployeeTerritory> employeeTerritories;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "region_id", nullable = false)
+    @JoinColumn(name = "region_id", nullable = true)
     private Region region;
 }

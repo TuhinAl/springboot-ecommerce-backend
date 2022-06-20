@@ -17,11 +17,23 @@ public class TerritoryTransformService {
         return newTerritoryList;
     }
 
-    public static List<TerritoryDto> mapToTerritoryDto(List<TerritoryDto> territoryDtoList, Territory territory) {
-        List<TerritoryDto> newTerritoryList = new ArrayList<>();
-        for (TerritoryDto territories : territoryDtoList) {
-            newTerritoryList.add(territories.setDescription(territory.getTerritoryDescription()));
+    public static List<Territory> mapToTerritory(List<Territory> newTerritoryList, List<TerritoryDto> territoryDtoList) {
+        for (TerritoryDto territoryIterate : territoryDtoList) {
+            Territory newTerritory = new Territory();
+            newTerritoryList.add(newTerritory.setTerritoryDescription(territoryIterate.getDescription()));
         }
         return newTerritoryList;
     }
+
+    public static List<TerritoryDto> mapToTerritoryDto(List<TerritoryDto> territoryDtoList, List<Territory> territory) {
+
+        List<TerritoryDto> newTerritoryList = new ArrayList<>();
+        for (TerritoryDto territories : territoryDtoList) {
+            TerritoryDto territoryDto = new TerritoryDto();
+            newTerritoryList.add(territoryDto.setDescription(territories.getDescription()));
+        }
+        return newTerritoryList;
+    }
+
+
 }
