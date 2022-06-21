@@ -13,6 +13,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class RegionService {
 
     private final RegionRepository regionRepository;
     private final TerritoryRepository territoryRepository;
+    private final EntityManager entityManager;
 
 
     public RegionDto saveRegion(RegionDto regionDto) {
@@ -39,8 +41,11 @@ public class RegionService {
 
         final QRegion qRegion = QRegion.region;
         final QTerritory qTerritory = QTerritory.territory;
-        JPAQuery<Region> regionJPAQuery = new JPAQuery<>();
-        List<Region> regionWithTerritoryList = regionJPAQuery.from(qRegion).leftJoin(qTerritory.region, qRegion).fetch();
+        JPAQuery<Region> regionJPAQuery = new JPAQuery<>(entityManager);
+        List<Region> regionWithTerritoryList = regionJPAQuery
+                .from(qRegion)
+                .leftJoin(qRegion.territoryList, qTerritory)
+                .fetch();
         List<RegionDto> regionDtoList = regionWithTerritoryList.stream().map(RegionTransformService::mapToRegionDto).collect(Collectors.toList());
 
         return regionDtoList;

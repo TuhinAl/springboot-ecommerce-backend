@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -18,12 +19,14 @@ import java.util.List;
 @Transactional
 public class TerritoryService {
 
+    private final EntityManager entityManager;
+
     public List<TerritoryDto> getTerritoryLeftRegionData() {
 
         final QRegion qRegion = QRegion.region;
         final QTerritory qTerritory = QTerritory.territory;
         JPAQuery<Region> regionJPAQuery = new JPAQuery<>();
-        JPAQuery<Territory> territoryJPAQuery = new JPAQuery<>();
+        JPAQuery<Territory> territoryJPAQuery = new JPAQuery<>(entityManager);
         List<Territory> territoryWithRegionList = territoryJPAQuery.from(qTerritory).leftJoin(qTerritory.region, qRegion).fetch();
         return TerritoryTransformService.mapToTerritoryDto(territoryWithRegionList);
     }
