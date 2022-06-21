@@ -3,6 +3,7 @@ package com.altuhin.ecommerce.controller;
 import com.altuhin.ecommerce.dto.CategoryDto;
 import com.altuhin.ecommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +26,11 @@ public class CategoryController {
     @PutMapping("/{id}")
     public CategoryDto updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Integer id) {
         return categoryService.updateCategory(categoryDto, id);
+    }
+
+    @GetMapping("/get/by/{id}")
+    public CategoryDto getCategory(@PathVariable Integer id) {
+        return categoryService.getCategory(id);
     }
 
     @PostMapping("/{id}")

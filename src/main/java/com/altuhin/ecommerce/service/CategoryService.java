@@ -33,6 +33,13 @@ public class CategoryService {
         return CategoryTransformService.mapToCategoryDto(saveCategory);
     }
 
+    public CategoryDto getCategory(Integer id) {
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Category With This Id is not Found!")
+        );
+        return CategoryTransformService.mapToCategoryDto(category);
+    }
+
     public CategoryDto deleteCategory(Integer id) {
 
 

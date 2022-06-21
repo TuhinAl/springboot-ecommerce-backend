@@ -76,11 +76,9 @@ public class EmployeeService {
     public EmployeeDto updateEmployee(EmployeeDto employeeDto, Integer id) {
 
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee with this id"));
-        employee.setFirstName(employee.getFirstName()).setTitle(employee.getTitle())
+        employee.setFirstName(employeeDto.getFirstName()).setTitle(employeeDto.getTitle())
                 .setAddress(employeeDto.getAddress()).setHomePhone(employeeDto.getHomePhone());
-
         employeeRepository.save(employee);
-
         return EmployeeTransformService.mapToEmployee(employeeDto, employee);
     }
 
