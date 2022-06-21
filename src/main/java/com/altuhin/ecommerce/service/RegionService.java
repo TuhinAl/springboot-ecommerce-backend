@@ -40,10 +40,7 @@ public class RegionService {
         final QRegion qRegion = QRegion.region;
         final QTerritory qTerritory = QTerritory.territory;
         JPAQuery<Region> regionJPAQuery = new JPAQuery<>();
-        JPAQuery<Territory> territoryJPAQuery = new JPAQuery<>();
-
         List<Region> regionWithTerritoryList = regionJPAQuery.from(qRegion).leftJoin(qTerritory.region, qRegion).fetch();
-        List<Territory> territoryWithRegionList = territoryJPAQuery.from(qTerritory).leftJoin(qTerritory.region, qRegion).fetch();
         List<RegionDto> regionDtoList = regionWithTerritoryList.stream().map(RegionTransformService::mapToRegionDto).collect(Collectors.toList());
 
         return regionDtoList;

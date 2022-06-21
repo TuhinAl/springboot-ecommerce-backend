@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public class TerritoryService {
 
-    public List<TerritoryDto> getRegionLeftTerritoryData() {
+    public List<TerritoryDto> getTerritoryLeftRegionData() {
 
         final QRegion qRegion = QRegion.region;
         final QTerritory qTerritory = QTerritory.territory;
