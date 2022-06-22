@@ -4,6 +4,7 @@ package com.altuhin.ecommerce.controller;
 import com.altuhin.ecommerce.dto.OrderDto;
 import com.altuhin.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,11 @@ public class OrderController {
     @PutMapping("/{id}")
     public OrderDto updateEmployee(@RequestBody OrderDto employeeDto, @PathVariable Integer id) {
         return orderService.updateOrder(employeeDto, id);
+    }
+
+    @GetMapping("/{id}")
+    public OrderDto getEmployeeById(@PathVariable Integer id) {
+        return orderService.deleteOrder(id);
     }
 
     @PostMapping("/{id}")

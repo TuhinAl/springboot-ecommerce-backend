@@ -1,28 +1,28 @@
 package com.altuhin.ecommerce.service.mapper;
 
+import com.altuhin.ecommerce.dto.RegionDto;
 import com.altuhin.ecommerce.entity.OrderDetails;
-import com.altuhin.ecommerce.entity.OrderDetailsDto;
 
 public class OrderDetailsTransformService {
 
-    public static OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails) {
-        OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+    public static RegionDto.OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails) {
+        RegionDto.OrderDetailsDto orderDetailsDto = new RegionDto.OrderDetailsDto();
         return orderDetailsDto.setUnitPrice(orderDetails.getUnitPrice()).setDiscount(orderDetails.getDiscount())
                 .setQuantity(orderDetails.getQuantity());
     }
 
-    public static OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails, OrderDetailsDto orderDetailsDto) {
+    public static RegionDto.OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails, RegionDto.OrderDetailsDto orderDetailsDto) {
         return orderDetailsDto.setUnitPrice(orderDetails.getUnitPrice()).setDiscount(orderDetails.getDiscount())
                 .setQuantity(orderDetails.getQuantity());
     }
 
-    public static OrderDetails mapToOrderDetails(OrderDetailsDto orderDetailsDto) {
+    public static OrderDetails mapToOrderDetails(RegionDto.OrderDetailsDto orderDetailsDto) {
         OrderDetails orderDetails = new OrderDetails();
         return orderDetails.setUnitPrice(orderDetailsDto.getUnitPrice()).setDiscount(orderDetailsDto.getDiscount())
                 .setQuantity(orderDetailsDto.getQuantity());
     }
 
-    public static OrderDetails mapToOrderDetails(OrderDetails orderDetails, OrderDetailsDto orderDetailsDto) {
+    public static OrderDetails mapToOrderDetails(OrderDetails orderDetails, RegionDto.OrderDetailsDto orderDetailsDto) {
         return orderDetails.setUnitPrice(orderDetailsDto.getUnitPrice()).setDiscount(orderDetailsDto.getDiscount())
                 .setQuantity(orderDetailsDto.getQuantity());
     }

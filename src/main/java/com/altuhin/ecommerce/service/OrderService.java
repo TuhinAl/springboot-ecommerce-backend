@@ -72,4 +72,15 @@ public class OrderService {
         return OrderTransformService.mapToOrderDto(order);
     }
 
+    public OrderDto getOrderById(Integer orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Order With This Id is not Found!")
+        );
+        if (order != null) {
+            order.setDelete(ApplicationUtility.ORDER_DELETED);
+            orderRepository.save(order);
+        }
+        return OrderTransformService.mapToOrderDto(order);
+    }
+
 }

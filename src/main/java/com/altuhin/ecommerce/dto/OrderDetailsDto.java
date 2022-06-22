@@ -1,4 +1,4 @@
-package com.altuhin.ecommerce.entity;
+package com.altuhin.ecommerce.dto;
 
 import lombok.Getter;
 import lombok.Setter;

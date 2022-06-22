@@ -1,9 +1,9 @@
 package com.altuhin.ecommerce.service;
 
 import com.altuhin.ecommerce.ApplicationUtility;
+import com.altuhin.ecommerce.dto.RegionDto;
 import com.altuhin.ecommerce.entity.Order;
 import com.altuhin.ecommerce.entity.OrderDetails;
-import com.altuhin.ecommerce.entity.OrderDetailsDto;
 import com.altuhin.ecommerce.entity.Product;
 import com.altuhin.ecommerce.reporsitory.OrderDetailsRepository;
 import com.altuhin.ecommerce.reporsitory.OrderRepository;
@@ -26,7 +26,7 @@ public class OrderDetailsService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
 
-    public OrderDetailsDto saveOrderDetails(OrderDetailsDto orderDetailsDto) {
+    public RegionDto.OrderDetailsDto saveOrderDetails(RegionDto.OrderDetailsDto orderDetailsDto) {
         Product product = productRepository.findById(orderDetailsDto.getProductId()).orElseThrow(
                 () -> new EntityNotFoundException("Product With This Id is not Found!")
         );
@@ -40,7 +40,7 @@ public class OrderDetailsService {
         return OrderDetailsTransformService.mapToOrderDetailsDto(details);
     }
 
-    public OrderDetailsDto updateOrderDetails(OrderDetailsDto orderDetailsDto, Integer id) {
+    public RegionDto.OrderDetailsDto updateOrderDetails(RegionDto.OrderDetailsDto orderDetailsDto, Integer id) {
         OrderDetails orderDetails = orderDetailsRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("OrderDetails With This Id is not Found!")
         );
@@ -48,7 +48,16 @@ public class OrderDetailsService {
                 .save(OrderDetailsTransformService.mapToOrderDetails(orderDetailsDto)));
     }
 
-    public OrderDetailsDto deleteOrderDetails(Integer id) {
+    public RegionDto.OrderDetailsDto getOrderDetailsOfOrderByOrderId(Integer orderId) {
+
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Order With This Id is not Found!")
+        );
+        OrderDetails allByOrder = orderDetailsRepository.findAllByOrder(order);
+        return OrderDetailsTransformService.mapToOrderDetailsDto(allByOrder);
+    }
+
+    public RegionDto.OrderDetailsDto deleteOrderDetails(Integer id) {
         OrderDetails orderDetails = orderDetailsRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("OrderDetails With This Id is not Found!")
         );
