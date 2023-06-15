@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @Accessors(chain = true)
 
-public class OrderDetailsDto implements Serializable {
+public class OrderDetailsDto extends RegionDto implements Serializable {
     private Integer orderId;
     private Integer productId;
     private Integer unitPrice;

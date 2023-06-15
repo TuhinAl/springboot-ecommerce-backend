@@ -1,5 +1,6 @@
 package com.altuhin.ecommerce.controller;
 
+import com.altuhin.ecommerce.dto.OrderDetailsDto;
 import com.altuhin.ecommerce.dto.RegionDto;
 import com.altuhin.ecommerce.service.OrderDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +19,17 @@ public class OrderDetailsController {
     private final OrderDetailsService orderDetailsService;
 
     @PostMapping()
-    public RegionDto.OrderDetailsDto saveOrderDetails(@RequestBody RegionDto.OrderDetailsDto orderDetailsDto) {
+    public OrderDetailsDto saveOrderDetails(@RequestBody OrderDetailsDto orderDetailsDto) {
         return orderDetailsService.saveOrderDetails(orderDetailsDto);
     }
 
     @PutMapping("/{id}")
-    public RegionDto.OrderDetailsDto updateEmployee(@RequestBody RegionDto.OrderDetailsDto orderDetailsDto, @PathVariable Integer id) {
+    public OrderDetailsDto updateEmployee(@RequestBody OrderDetailsDto orderDetailsDto, @PathVariable Integer id) {
         return orderDetailsService.updateOrderDetails(orderDetailsDto, id);
     }
 
     @PostMapping("/{id}")
-    public RegionDto.OrderDetailsDto deleteEmployee(@PathVariable Integer id) {
+    public OrderDetailsDto deleteEmployee(@PathVariable Integer id) {
         return orderDetailsService.deleteOrderDetails(id);
     }
 
